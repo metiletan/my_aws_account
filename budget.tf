@@ -1,7 +1,7 @@
 resource "aws_budgets_budget" "my_zero_budget" {
   name         = "my zero budget"
   budget_type  = "COST"
-  limit_amount = "0.01"
+  limit_amount = var.budget_amount
   limit_unit   = "USD"
   time_unit    = "MONTHLY"
 
@@ -10,6 +10,6 @@ resource "aws_budgets_budget" "my_zero_budget" {
     threshold                  = 50
     threshold_type             = "PERCENTAGE"
     notification_type          = "FORECASTED"
-    subscriber_email_addresses = ["metiletan@gmail.com"]
+    subscriber_email_addresses = [var.notification_email]
   }
 }
