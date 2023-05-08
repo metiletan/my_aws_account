@@ -22,3 +22,25 @@ jobs:
         run: terraform init
       - name: Run tf plan
         run: terraform plan -var "budget_amount='$BUDGET_AMOUNT'" -input=false -out tfplan
+      - name: Upload tf plan as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: tfplan
+          path: tfplan
+
+  apply:
+    name: Terraform Apply
+    runs-on: ubuntu-latest
+    container: "hashicorp/terraform:1.4"
+    needs: plan
+    steps: 
+      - name: Checkout source code
+        uses: actions/checkout@v2 #checkout робить pull репозиторію та гілки, в якому запущений. Таким чином, ми отримуємо доступ до коду.
+      - name: Download a single artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: tfplan # if no 'with' then download all artifacts
+      - name: Tf init
+        run: terraform init
+      - name: Tf apply
+        run: terraform apply -input=false -lock=true tfplan
