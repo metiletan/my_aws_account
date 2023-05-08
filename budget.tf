@@ -7,7 +7,7 @@ resource "aws_budgets_budget" "my_zero_budget" {
 
   notification {
     comparison_operator        = "GREATER_THAN"
-    threshold                  = 50
+    threshold                  =               50
     threshold_type             = "PERCENTAGE"
     notification_type          = "FORECASTED"
     subscriber_email_addresses = [var.notification_email]
