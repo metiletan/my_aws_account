@@ -4,6 +4,12 @@ on:
     branches:
       - 'master'
 
+env:
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_DEFAULT_REGION: eu-central-1
+  BUDGET_AMOUNT: '0.01'
+
 jobs: 
   plan:
     name: Create Terraform Plan
@@ -12,5 +18,7 @@ jobs:
     steps: 
       - name: Checkout source code
         uses: actions/checkout@v2 #checkout робить pull репозиторію та гілки, в якому запущений. Таким чином, ми отримуємо доступ до коду.
+      - name: Tf init
+        run: terraform init
       - name: Run tf plan
-        run: terraform plan -input=false -out tfplan
+        run: terraform plan -var "budget_amount='$BUDGET_AMOUNT'" -input=false -out tfplan
