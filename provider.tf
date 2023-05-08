@@ -1,4 +1,5 @@
 terraform {
+  required_version = "~> 1.4"
   backend "s3" {
     bucket = "metil-terraform-state"
     key    = "tf_state/terraform.tfstate"
