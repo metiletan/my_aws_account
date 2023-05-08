@@ -1,0 +1,16 @@
+name: update infrastructure
+on: 
+  push: 
+    branches:
+      - 'master'
+
+jobs: 
+  plan:
+    name: Create Terraform Plan
+    runs-on: ubuntu-latest
+    container: "hashicorp/terraform:1.4"
+    steps: 
+      - name: Checkout source code
+        uses: actions/checkout@v2 #checkout робить pull репозиторію та гілки, в якому запущений. Таким чином, ми отримуємо доступ до коду.
+      - name: Run tf plan
+        run: terraform plan -input=false -out tfplan
