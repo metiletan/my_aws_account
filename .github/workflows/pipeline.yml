@@ -21,7 +21,7 @@ jobs:
       - name: Tf init
         run: terraform init
       - name: Run tf plan
-        run: terraform plan -var "budget_amount='$BUDGET_AMOUNT'" -input=false -out tfplan
+        run: terraform plan -var "budget_amount=$BUDGET_AMOUNT" -input=false -out tfplan
       - name: Upload tf plan as artifact
         uses: actions/upload-artifact@v3
         with:
